@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 
@@ -58,10 +59,55 @@ class _MemoramaState extends State<Memorama> {
     setState(() {});
   }
 
+  void tocarCuadro(int index) {
+    // Bloquear si ya está visible o en espera
+    if (visibles[index] || esperando) return;
+    setState(() {
+      visibles[index] = true;
+      if (primerIndice == null) {
+        primerIndice = index;
+      } else {
+        segundoIndice = index;
+        if (colores[primerIndice!] == colores[segundoIndice!]) {
+          primerIndice = null;
+          segundoIndice = null;
+          if (visibles.every((v) => v)) {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('JUEGO TERMINADO'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      inicializaJuego();
+                    },
+                    child: const Text('Reiniciar'),
+                  ),
+                ],
+              ),
+            );
+          }
+        } else {
+          esperando = true;
+          Timer(const Duration(seconds: 1), () {
+            setState(() {
+              visibles[primerIndice!] = false;
+              visibles[segundoIndice!] = false;
+              primerIndice = null;
+              segundoIndice = null;
+              esperando = false;
+            });
+          });
+        }
+      }
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Memorama - Ojeda Ramírez Daniel Natan'),
+        title: const Text('Memorama - Alumno: Ojeda Ramírez Daniel Natan'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
