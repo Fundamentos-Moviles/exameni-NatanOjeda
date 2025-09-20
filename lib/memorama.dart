@@ -1,6 +1,10 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+
+/*Memorama Examen
+* Alumno: Ojeda Ramírez Daniel Natan
+* */
+
 
 class Memorama extends StatefulWidget {
   const Memorama({super.key});
@@ -24,7 +28,7 @@ class _MemoramaState extends State<Memorama> {
   void initState(){
     super.initState();
     totalCuadros = filas * columnas;
-    if(totalCuadros%2==0){
+    if(totalCuadros%2!=0){
       throw Exception("El número de cuadros debe ser par");
     }
     inicializaJuego();
@@ -55,6 +59,16 @@ class _MemoramaState extends State<Memorama> {
   }
 
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Memorama - Ojeda Ramírez Daniel Natan'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: inicializaJuego,
+          )
+        ],
+      ),
+    );
   }
 }
