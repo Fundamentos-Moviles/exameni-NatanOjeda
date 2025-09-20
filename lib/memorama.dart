@@ -20,11 +20,17 @@ class _MemoramaState extends State<Memorama> {
   final Color gris = Colors.grey;
   bool esperando = false;
 
-  void inicializaJuego(){
+  @override
+  void initState(){
+    super.initState();
     totalCuadros = filas * columnas;
     if(totalCuadros%2==0){
       throw Exception("El número de cuadros debe ser par");
     }
+    inicializaJuego();
+  }
+
+  void inicializaJuego(){
     final Random random = Random();
     List<Color> baseColores = List.generate(totalCuadros ~/ 2, (index) {
       return Color.fromARGB(
@@ -48,7 +54,6 @@ class _MemoramaState extends State<Memorama> {
     setState(() {});
   }
 
-  @override
   Widget build(BuildContext context) {
     return const Placeholder();
   }
