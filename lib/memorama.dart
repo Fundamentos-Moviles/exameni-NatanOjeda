@@ -115,6 +115,25 @@ class _MemoramaState extends State<Memorama> {
           )
         ],
       ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: columnas,
+            crossAxisSpacing: 8,
+            mainAxisSpacing: 8,
+          ),
+          itemCount: totalCuadros,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () => tocarCuadro(index),
+              child: Container(
+                color: visibles[index] ? colores[index] : gris,
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
